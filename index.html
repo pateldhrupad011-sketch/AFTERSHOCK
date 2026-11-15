@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AFTERSHOCK</title>
+  <link rel="stylesheet" href="styles/main.css" />
+</head>
+<body>
+  <div id="stage">
+    <canvas id="game-canvas" width="640" height="360"></canvas>
+
+    <div id="ui-root">
+      <section id="boot-screen" class="screen">
+        <div class="boot-content">
+          <div class="boot-title glitch-text" data-text="AFTERSHOCK">AFTERSHOCK</div>
+          <p class="boot-prompt blink">PRESS ANY KEY</p>
+          <p class="boot-note">SOUND ON</p>
+        </div>
+      </section>
+
+      <section id="menu-screen" class="screen">
+        <h1 class="menu-title glitch-text" data-text="AFTERSHOCK">AFTERSHOCK</h1>
+        <nav class="main-menu" aria-label="Main menu">
+          <button class="menu-item is-primary" data-action="start">LEVELS</button>
+          <button class="menu-item" data-action="credits">CREDITS</button>
+        </nav>
+      </section>
+
+      <section id="credits-screen" class="screen">
+        <header class="level-select-header">
+          <button class="back-button" data-action="back">&lt; BACK</button>
+        </header>
+        <div class="credits-panel">
+          <h2 class="credits-title">CREDITS</h2>
+          <p class="credits-label">MUSIC</p>
+          <ul class="credits-list">
+            <li>Alex Production</li>
+            <li>Shane Ivers</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="level-select-screen" class="screen">
+        <header class="level-select-header">
+          <button class="back-button" data-action="back">&lt; BACK</button>
+        </header>
+        <div class="level-cards"></div>
+      </section>
+
+      <section id="game-screen" class="screen">
+        <div class="hud">
+          <div class="hud-left">
+            <div class="hud-hearts"></div>
+            <div class="hud-level-name"></div>
+          </div>
+          <div class="hud-center">
+            <div class="hud-progress"><div class="hud-progress-fill"></div><div class="hud-progress-runner"></div></div>
+            <div class="swarm-panel">
+              <span class="swarm-title">SWARM</span>
+              <span class="swarm-count"></span>
+              <div class="swarm-timer"><div class="swarm-timer-fill"></div></div>
+              <span class="swarm-hint">SHOOT THE DRONES</span>
+            </div>
+            <div class="boss-bar">
+              <span class="boss-name">THE ARCHITECT</span>
+              <div class="boss-health"><div class="boss-health-fill"></div></div>
+            </div>
+          </div>
+          <div class="hud-right">
+            <div class="hud-score">0</div>
+            <div class="hud-shards"><img class="hud-shard-icon" alt="" /><span class="hud-shard-count">0</span></div>
+          </div>
+          <div class="hud-blaster">
+            <span class="hud-blaster-label">GUN</span>
+            <div class="hud-blaster-cells"></div>
+          </div>
+        </div>
+
+        <button class="pause-button" aria-label="Pause">II</button>
+
+        <div class="radio-message">
+          <span class="radio-speaker"></span>
+          <span class="radio-text"></span>
+        </div>
+        <div class="center-banner"><div class="banner-title"></div><div class="banner-subtitle"></div></div>
+        <div class="ko-overlay" aria-hidden="true"><span class="ko-text glitch-text" data-text="KO">KO</span></div>
+
+        <div class="level-intro">
+          <div class="intro-sector"></div>
+          <div class="intro-name glitch-text"></div>
+          <div class="intro-briefing"></div>
+          <div class="intro-skip blink">SPACE TO START</div>
+        </div>
+
+        <div class="modal pause-menu">
+          <div class="panel">
+            <h2>PAUSED</h2>
+            <button class="menu-item is-primary" data-action="resume">RESUME</button>
+            <button class="menu-item" data-action="restart">RETRY</button>
+            <button class="menu-item" data-action="settings">SETTINGS</button>
+            <button class="menu-item" data-action="quit">LEVELS</button>
+          </div>
+        </div>
+
+        <div class="modal results-panel">
+          <div class="panel">
+            <h2 class="results-title">LEVEL CLEAR</h2>
+            <p class="results-outro"></p>
+            <div class="results-body">
+              <dl class="results-stats"></dl>
+              <div class="results-rank"><span class="rank-label">RANK</span><span class="rank-letter"></span></div>
+            </div>
+            <div class="panel-buttons">
+              <button class="menu-item is-primary" data-action="levels">LEVELS</button>
+              <button class="menu-item" data-action="retry">RETRY</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal failure-panel">
+          <div class="panel">
+            <h2 class="glitch-text" data-text="GAME OVER">GAME OVER</h2>
+            <p class="failure-text">You were destroyed.</p>
+            <div class="panel-buttons">
+              <button class="menu-item is-primary" data-action="retry">RETRY</button>
+              <button class="menu-item" data-action="levels">LEVELS</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="ending-screen" class="screen">
+        <div class="ending-content">
+          <p class="ending-kicker">BOSS DEFEATED</p>
+          <h2 class="ending-title glitch-text" data-text="YOU WIN">YOU WIN</h2>
+          <p class="ending-text">The city is quiet. For now.</p>
+          <dl class="ending-stats"></dl>
+          <div class="panel-buttons">
+            <button class="menu-item is-primary" data-action="play-again">PLAY AGAIN</button>
+            <button class="menu-item" data-action="menu">MENU</button>
+          </div>
+        </div>
+      </section>
+
+      <div class="modal settings-modal" role="dialog" aria-label="Settings">
+        <div class="panel">
+          <h2>SETTINGS</h2>
+          <label class="setting-row"><span>SOUND</span><input type="checkbox" data-setting="soundEnabled" /></label>
+          <label class="setting-row"><span>MUSIC</span><input type="range" min="0" max="1" step="0.05" data-setting="musicVolume" /></label>
+          <label class="setting-row"><span>SFX</span><input type="range" min="0" max="1" step="0.05" data-setting="effectsVolume" /></label>
+          <label class="setting-row"><span>SHAKE</span><input type="checkbox" data-setting="screenShake" /></label>
+          <label class="setting-row"><span>CRT</span><input type="checkbox" data-setting="crtEffect" /></label>
+          <label class="setting-row"><span>UNLOCK ALL</span><input type="checkbox" data-setting="unlockAllLevels" /></label>
+          <div class="panel-buttons">
+            <button class="menu-item" data-action="reset">RESET</button>
+            <button class="menu-item is-primary" data-action="close">CLOSE</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="transition-overlay"><div class="wipe-panel"></div><div class="wipe-panel"></div><div class="wipe-panel"></div></div>
+      <div id="loading-error" hidden></div>
+    </div>
+    <div id="crt-overlay"></div>
+  </div>
+
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>

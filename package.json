@@ -1,0 +1,12 @@
+{
+  "name": "aftershock",
+  "version": "1.0.0",
+  "description": "AFTERSHOCK — a 2.5D cyberpunk pixel-art action runner.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node tools/serve.mjs",
+    "test": "node tools/playtest-levels.mjs",
+    "sprites": "python3 tools/extract-sprites.py"
+  }
+}
